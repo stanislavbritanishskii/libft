@@ -6,13 +6,13 @@
 /*   By: sbritani <sbritani@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 03:38:52 by sbritani          #+#    #+#             */
-/*   Updated: 2022/10/24 02:51:04 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/01/03 19:11:11 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	count_words(char const *s, char c)
+static int	count_words(char const *s, char *c)
 {
 	int		counter;
 	int		i;
@@ -23,7 +23,7 @@ static int	count_words(char const *s, char c)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == c)
+		if (ft_strchr(c, s[i]))
 		{
 			counter += prev;
 			prev = 0;
@@ -34,10 +34,10 @@ static int	count_words(char const *s, char c)
 	}
 	if (i == 0)
 		return (0);
-	return (counter + (s[i - 1] != c));
+	return (counter + (!ft_strchr(c, s[i - 1])));
 }
 
-static void	*clear(char **res)
+void	*ft_split_clear(char **res)
 {
 	int	i;
 
@@ -48,7 +48,7 @@ static void	*clear(char **res)
 	return (NULL);
 }
 
-static char	**ft_split_word(char **res, int i, char c, char const *s)
+static char	**ft_split_word(char **res, int i, char *c, char const *s)
 {
 	int	word;
 	int	j;
@@ -58,14 +58,14 @@ static char	**ft_split_word(char **res, int i, char c, char const *s)
 	word = -1;
 	while (++word < count_words(s, c))
 	{
-		while (s[i] == c && s[i])
+		while (ft_strchr(c, s[i]) && s[i])
 			i = i + 1;
 		j = i;
-		while (s[i] && s[i] != c)
+		while (s[i] && !ft_strchr(c, s[i]))
 			i += 1;
 		res[word] = malloc(sizeof(char) * (i - j + 1));
 		if (!res[word])
-			return (clear(res));
+			return (ft_split_clear(res));
 		counter = 0;
 		while (j < i)
 			res[word][counter++] = s[j++];
@@ -75,7 +75,7 @@ static char	**ft_split_word(char **res, int i, char c, char const *s)
 	return (res);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char *c)
 {
 	int		i;
 	char	**res;
