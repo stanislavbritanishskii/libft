@@ -6,7 +6,7 @@
 /*   By: sbritani <sbritani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 17:00:51 by sbritani          #+#    #+#             */
-/*   Updated: 2023/03/06 10:59:34 by sbritani         ###   ########.fr       */
+/*   Updated: 2023/03/06 11:11:17 by sbritani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_list
 # define MAXFDS 4096
 
 char	*get_next_line(int fd);
+char	**ft_read_lines(char *path);
 
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_str_chr(const char *s, int c);
